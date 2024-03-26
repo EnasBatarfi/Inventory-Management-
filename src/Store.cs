@@ -2,19 +2,31 @@ using System.ComponentModel.DataAnnotations;
 
 public class Store
 {
+    private int capacity;
     private List<Item> items = new List<Item>();
-
+    public Store(int capacity)
+    {
+        this.capacity = capacity;
+    }
+    public int Capacity { get { return this.capacity; } }
     public void AddItem(Item newItem)
     {
-        bool itemIsExist = this.items.Any(item => item.Name == newItem.Name);
-        if (!itemIsExist)
+        if (items.Count() < capacity)
         {
-            items.Add(newItem);
-            Console.WriteLine("Item added successfully");
+            bool itemIsExist = this.items.Any(item => item.Name == newItem.Name);
+            if (!itemIsExist)
+            {
+                items.Add(newItem);
+                Console.WriteLine("Item added successfully");
+            }
+            else
+            {
+                Console.WriteLine("Item is already exists");
+            }
         }
         else
         {
-            Console.WriteLine("Item is already exists");
+            Console.WriteLine("You reach the maximum store capacity");
         }
     }
     public void DeleteItem(Item delItem)

@@ -19,7 +19,7 @@
             var batteries = new Item("Batteries", 10);
             var umbrella = new Item("Umbrella", 5);
             var sunscreen = new Item("Sunscreen", 8);
-            Store store = new Store();
+            Store store = new Store(2);
             store.AddItem(waterBottle);
             store.AddItem(chocolateBar);
             store.AddItem(notebook);
