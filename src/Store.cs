@@ -14,7 +14,7 @@ public class Store
         }
         else
         {
-            throw new ArgumentException("Item is already exists");
+            Console.WriteLine("Item is already exists");
         }
     }
     public void DeleteItem(Item delItem)
@@ -28,11 +28,35 @@ public class Store
         }
         else
         {
-            throw new ArgumentException("Item is not exists");
+            Console.WriteLine("Item is not exists");
         }
     }
+    public int GetCurrentVolume()
+    {
+        return items.Sum(item => item.Quantity);
+    }
+    public Item? FindItemByName(string itemName)
+    {
+        Item? foundedItem = items.Find(item => item.Name == itemName);
+        if (foundedItem != null)
+        {
+            Console.WriteLine($"Item {itemName} is founded successfully");
+        }
+        else
+        {
+            Console.WriteLine("Item is not exists");
+
+        }
+        return foundedItem;
+
+    }
+    public List<Item> SortByNameAsc()
+    {
+        return items.OrderBy(item => item.Name).ToList();
+    }
+
     public void DisplayItems()
     {
-        Console.WriteLine(items.Count() > 0 ? string.Join(", ", items) : "No items in the store");
+        Console.WriteLine(items.Count() > 0 ? string.Join("\n", items) : "No items in the store");
     }
 }
