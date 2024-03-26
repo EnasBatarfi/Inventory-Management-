@@ -29,12 +29,12 @@ public class Store
             Console.WriteLine("You reach the maximum store capacity");
         }
     }
-    public void DeleteItem(Item delItem)
+    public void DeleteItem(string itemName)
     {
-        Item? foundedItem = this.items.FirstOrDefault(item => item.Name == delItem.Name);
+        Item? foundedItem = this.items.FirstOrDefault(item => item.Name == itemName);
         if (foundedItem != null)
         {
-            items.Remove(delItem);
+            items.Remove(foundedItem);
             Console.WriteLine("Item deleted successfully");
 
         }

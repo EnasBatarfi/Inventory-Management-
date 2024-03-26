@@ -1,62 +1,110 @@
-﻿public class InventoryManagementApp
+﻿using System;
+
+public class InventoryManagementApp
 {
     public static void Main(string[] args)
     {
         try
         {
-            var waterBottle = new Item("Water Bottle", 10, new DateTime(2023, 1, 1));
-            var chocolateBar = new Item("Chocolate Bar", 15, new DateTime(2023, 2, 1));
-            var notebook = new Item("Notebook", 5, new DateTime(2023, 3, 1));
-            var pen = new Item("Pen", 20, new DateTime(2023, 4, 1));
-            var tissuePack = new Item("Tissue Pack", 30, new DateTime(2023, 5, 1));
-            var chipsBag = new Item("Chips Bag", 25, new DateTime(2023, 6, 1));
-            var sodaCan = new Item("Soda Can", 8, new DateTime(2023, 7, 1));
-            var soap = new Item("Soap", 12, new DateTime(2023, 8, 1));
-            var shampoo = new Item("Shampoo", 40, new DateTime(2023, 9, 1));
-            var toothbrush = new Item("Toothbrush", 50, new DateTime(2023, 10, 1));
-            var coffee = new Item("Coffee", 20);
-            var sandwich = new Item("Sandwich", 15);
-            var batteries = new Item("Batteries", 10);
-            var umbrella = new Item("Umbrella", 5);
-            var sunscreen = new Item("Sunscreen", 8);
-            Store store = new Store(2);
-            store.AddItem(waterBottle);
-            store.AddItem(chocolateBar);
-            store.AddItem(notebook);
-            store.AddItem(pen);
-            store.AddItem(tissuePack);
-            store.AddItem(chipsBag);
-            store.AddItem(sodaCan);
-            store.AddItem(soap);
-            store.AddItem(shampoo);
-            store.AddItem(toothbrush);
-            store.AddItem(coffee);
-            store.AddItem(sandwich);
-            store.AddItem(batteries);
-            store.AddItem(umbrella);
-            store.AddItem(sunscreen);
+            Console.WriteLine("Welcome to the Inventory Management System!");
 
-            store.DisplayItems();
-            Console.WriteLine($"Current volume of the store: {store.GetCurrentVolume()}");
+            int capacity;
+            Console.Write("Please Enter your store capacity: ");
 
-            store.FindItemByName("Pen");
-            store.FindItemByName("shampoo");
-
-            List<Item> items = store.SortByNameAsc();
-            foreach (Item i in items)
+            while (!int.TryParse(Console.ReadLine(), out capacity) || capacity <= 0)
             {
-                Console.WriteLine(i.ToString());
+                Console.Write("Invalid capacity. Please enter a number...");
+
             }
 
+            Store store = new Store(capacity);
 
+            while (true)
+            {
+                Console.WriteLine("\nChoose an action:");
+                Console.WriteLine("1. Add Item");
+                Console.WriteLine("2. Delete Item");
+                Console.WriteLine("3. Display Items");
+                Console.WriteLine("4. Find Item by Name");
+                Console.WriteLine("5. Sort Items by Name (Ascending)");
+                Console.WriteLine("6. Exit");
+                Console.Write("Enter your choice (1-6): ");
 
+                int choice;
+                if (!int.TryParse(Console.ReadLine(), out choice))
+                {
+                    Console.WriteLine("Invalid input. Please enter a number.");
+                    continue;
+                }
 
-            store.DeleteItem(soap);
-            store.DisplayItems();
+                switch (choice)
+                {
+                    case 1:
+                        AddItem(store);
+                        break;
+                    case 2:
+                        DeleteItem(store);
+                        break;
+                    case 3:
+                        store.DisplayItems();
+                        break;
+                    case 4:
+                        FindItem(store);
+                        break;
+                    case 5:
+                        SortItems(store);
+                        break;
+                    case 6:
+                        Console.WriteLine("Thank you");
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please enter a number between 1 and 6.");
+                        break;
+                }
+            }
         }
         catch (Exception e)
         {
             Console.WriteLine(e.Message);
+        }
+    }
+
+    static void AddItem(Store store)
+    {
+        Console.Write("Enter item name: ");
+        string name = Console.ReadLine() ?? "";
+
+        Console.Write("Enter quantity: ");
+        int quantity;
+        while (!int.TryParse(Console.ReadLine(), out quantity))
+        {
+            Console.WriteLine("Invalid quantity. Please enter a number...");
+        }
+
+        store.AddItem(new Item(name, quantity));
+    }
+
+    static void DeleteItem(Store store)
+    {
+        Console.Write("Enter item name to delete: ");
+        string name = Console.ReadLine() ?? "";
+        store.DeleteItem(name);
+    }
+
+    static void FindItem(Store store)
+    {
+        Console.Write("Enter item name to find: ");
+        string name = Console.ReadLine() ?? "";
+
+        store.FindItemByName(name);
+    }
+
+    static void SortItems(Store store)
+    {
+        var orderedItems = store.SortByNameAsc();
+        foreach (var item in orderedItems)
+        {
+            Console.WriteLine(item);
         }
 
     }
