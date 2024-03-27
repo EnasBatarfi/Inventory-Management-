@@ -1,35 +1,32 @@
+using System;
+
 public class Item
 {
-    private string name;
-    private int quantity;
-    private DateTime createdDate;
+    // Constructor to initialize item properties
     public Item(string name, int quantity, DateTime? createdDate = default)
     {
-        this.name = name;
+        // Validate quantity
+        if (quantity < 0)
+            throw new ArgumentException("Quantity must be a non-negative value");
+
+        Name = name;
         Quantity = quantity;
         CreatedDate = createdDate ?? DateTime.Now;
     }
-    public string Name
-    {
-        get { return this.name; }
-    }
-    public int Quantity
-    {
-        get { return this.quantity; }
-        set
-        {
-            if (value < 0) throw new ArgumentException("Amount cannot be negative");
-            else this.quantity = value;
-        }
-    }
-    public DateTime CreatedDate
-    {
-        get { return this.createdDate; }
-        set { this.createdDate = value; }
-    }
 
+    // Property to get item name
+    public string Name { get; private set; }
+
+    // Property to get item quantity
+    public int Quantity { get; private set; }
+
+    // Property to get item creation date
+    public DateTime CreatedDate { get; private set; }
+
+    // Override ToString method to display item details
     public override string ToString()
     {
-        return $"Name: {name}, Quantity: {Quantity}, Created Date: {CreatedDate}";
+        return $"│ {Name,-30} │ {Quantity,-10} │ {CreatedDate,-30} │";
     }
+
 }
