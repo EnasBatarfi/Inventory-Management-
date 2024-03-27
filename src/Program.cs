@@ -41,12 +41,11 @@ public class InventoryManagementApp
                 Console.WriteLine("9. Display Current Volume and Capacity");
                 Console.WriteLine("10. Exit");
                 Console.Write("\nEnter your choice (1-10): ");
-
+                int choice;
                 // Get user choice
-                if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > 10)
+                while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 10)
                 {
-                    Console.WriteLine("\nInvalid input. Please enter a number between 1 and 9.");
-                    continue;
+                    Console.Write("\nInvalid input. Please enter a number between 1 and 10: ");
                 }
 
                 // Perform action based on user choice
