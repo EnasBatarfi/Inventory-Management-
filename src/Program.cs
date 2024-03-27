@@ -38,11 +38,12 @@ public class InventoryManagementApp
                 Console.WriteLine("6. Sort Items by Name (Ascending or Descending)");
                 Console.WriteLine("7. Sort Items by Date (Ascending or Descending)");
                 Console.WriteLine("8. Group Items by Date");
-                Console.WriteLine("9. Exit");
-                Console.Write("\nEnter your choice (1-9): ");
+                Console.WriteLine("9. Display Current Volume and Capacity");
+                Console.WriteLine("10. Exit");
+                Console.Write("\nEnter your choice (1-10): ");
 
                 // Get user choice
-                if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > 9)
+                if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > 10)
                 {
                     Console.WriteLine("\nInvalid input. Please enter a number between 1 and 9.");
                     continue;
@@ -76,6 +77,9 @@ public class InventoryManagementApp
                         GroupItemsByDate(store);
                         break;
                     case 9:
+                        GetStoreCurrentVolume(store);
+                        break;
+                    case 10:
                         Console.WriteLine("\nThank you for using the Inventory Management System!");
                         return;
                 }
@@ -86,6 +90,18 @@ public class InventoryManagementApp
                 Console.WriteLine($"\nAn error occurred: {e.Message}");
             }
         }
+    }
+
+    // Method to return the current volume of the store to the user
+    private static void GetStoreCurrentVolume(Store store)
+    {
+        // Call the method to return the current volume
+        int currentVolume = store.GetCurrentVolume();
+
+        // Get the maximum capacity of the store.
+        int maxCapacity = store.Capacity;
+
+        Console.WriteLine($"Current volume of items in the store: {currentVolume} out of {maxCapacity}");
     }
 
     // Method to initialize store with initial values
